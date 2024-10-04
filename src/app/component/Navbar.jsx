@@ -50,15 +50,16 @@ const Navbar = () => {
                 className="absolute left-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 py-2 space-y-2 animate-fadeInUp"
                 role="menu"
               >
-                <li className="px-4 py-2 hover:bg-yellow-300">
-                  <Link href="/adopt/dogs">Dogs</Link>
-                </li>
-                <li className="px-4 py-2 hover:bg-yellow-300">
-                  <Link href="/adopt/cats">Cats</Link>
-                </li>
-                <li className="px-4 py-2 hover:bg-yellow-300">
-                  <Link href="/adopt/other">Other Animals</Link>
-                </li>
+                <Link href="/adopt/dogs">
+                  <li className="px-4 py-2 hover:bg-yellow-300">Dogs</li>
+                </Link>
+                <Link href="/adopt/cats">
+                  <li className="px-4 py-2 hover:bg-yellow-300">Cats</li>
+                </Link>
+                <Link href="/adopt/other">
+                  <li className="px-4 py-2 hover:bg-yellow-300">Other Animals</li>
+                </Link>
+
               </ul>
             )}
           </li>
@@ -80,15 +81,21 @@ const Navbar = () => {
                 className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-10 py-2 space-y-2 animate-fadeInUp"
                 role="menu"
               >
-                <li className="px-4 py-2 hover:bg-yellow-300">
-                  <Link href="/login">Login</Link>
-                </li>
-                <li className="px-4 py-2 hover:bg-yellow-300">
-                  <Link href="/signup">Sign Up</Link>
-                </li>
-                <li className="px-4 py-2 hover:bg-yellow-300">
-                  <Link href="/forgot-password">Forgot Password</Link>
-                </li>
+                <Link href="/login">
+                  <li className="px-4 py-2 hover:bg-yellow-300">
+                    Login
+                  </li>
+                </Link>
+                <Link href="/signup">
+                  <li className="px-4 py-2 hover:bg-yellow-300">
+                    Sign Up
+                  </li>
+                </Link>
+                <Link href="/forgot-password">
+                  <li className="px-4 py-2 hover:bg-yellow-300">
+                    Forgot Password
+                  </li>
+                </Link>
               </ul>
             )}
           </li>
