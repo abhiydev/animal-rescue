@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-600 to-pink-500 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-400 to-pink-400 px-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-2xl p-8 animate-fadeInUp">
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-pink-600 mb-6">Login to Your Account</h2>
         

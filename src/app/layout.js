@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-pink-300 flex flex-col w-100 h-full overflow-scroll">
+      <body className="bg-pink-400 flex flex-col w-100 h-full overflow-scroll">
         <div className="">
           <Navbar/>
         {children}

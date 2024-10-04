@@ -1,22 +1,48 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+
+const Card = ({ href, imageSrc, alt, title, description }) => (
+  <Link href={href}>
+    <div className="relative w-full p-2 bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer animate-slideUp">
+      <div className="relative overflow-hidden rounded-lg">
+        <Image
+          src={imageSrc}
+          alt={alt}
+          width={500}
+          height={300}
+          className="rounded-lg w-full h-auto transition-transform duration-500 ease-in-out hover:scale-110"
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent flex flex-col justify-end p-4 text-white">
+        <h3 className="text-lg font-bold">{title}</h3>
+        <p className="text-sm mb-4">{description}</p>
+        <button className="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-4 rounded-lg transition-transform transform hover:-translate-y-1">
+          Adopt Me
+        </button>
+      </div>
+    </div>
+  </Link>
+);
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    // Trigger the animation after the component mounts
-    setTimeout(() => setIsVisible(true), 100);
+  const triggerAnimation = useCallback(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer); // Clean up timeout on unmount
   }, []);
+
+  useEffect(() => {
+    triggerAnimation();
+  }, [triggerAnimation]);
 
   return (
     <>
       {/* Hero Section */}
       <div className="relative h-[70vh] sm:h-[80vh] w-full overflow-hidden">
-        {/* Background Video */}
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"
           autoPlay
@@ -29,11 +55,7 @@ export default function Home() {
             type="video/mp4"
           />
         </video>
-
-        {/* Overlay */}
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
-
-        {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 drop-shadow-lg">
             Help Us Find a Forever Home
@@ -56,83 +78,27 @@ export default function Home() {
           isVisible ? "animate-fadeIn" : "opacity-0"
         }`}
       >
-        {/* Card 1 - Cats */}
-        <Link href="/adopt/cats">
-          <div className="relative w-full p-2 lg:mt-4 bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer animate-slideUp">
-            <div className="relative overflow-hidden rounded-lg">
-              <Image
-                src="https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Cat looking for a home"
-                width={500}
-                height={300}
-                className="rounded-lg w-full h-auto transition-transform duration-500 ease-in-out hover:scale-110"
-              />
-            </div>
-            {/* Card Content */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent flex flex-col justify-end p-4 text-white">
-              <h3 className="text-lg font-bold">Cats</h3>
-              <p className="text-sm mb-4">
-                Increased awareness about animal welfare has boosted cat
-                adoptions.
-              </p>
-              <button className="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-4 rounded-lg transition-transform transform hover:-translate-y-1">
-                Adopt Me
-              </button>
-            </div>
-          </div>
-        </Link>
-
-        {/* Card 2 - Dogs */}
-        <Link href="/adopt/dogs">
-          <div className="relative w-full p-2 bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer animate-slideUp">
-            <div className="relative overflow-hidden rounded-lg">
-              <Image
-                src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Dog waiting for adoption"
-                width={500}
-                height={300}
-                className="rounded-lg w-full h-auto transition-transform duration-500 ease-in-out hover:scale-110"
-              />
-            </div>
-            {/* Card Content */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent flex flex-col justify-end p-4 text-white">
-              <h3 className="text-lg font-bold">Dogs</h3>
-              <p className="text-sm mb-4">
-                Only 10% of pets in India are adopted, while the rest face
-                abandonment.
-              </p>
-              <button className="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-4 rounded-lg transition-transform transform hover:-translate-y-1">
-                Adopt Me
-              </button>
-            </div>
-          </div>
-        </Link>
-
-        {/* Card 3 - Other Animals */}
-        <Link href="/adopt/other">
-          <div className="relative w-full lg:mt-4 p-2 bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer animate-slideUp">
-            <div className="relative overflow-hidden rounded-lg">
-              <Image
-                src="https://images.pexels.com/photos/457447/pexels-photo-457447.jpeg?auto=compress&cs=tinysrgb&w=400"
-                alt="Other animals"
-                width={500}
-                height={300}
-                className="rounded-lg w-full h-auto transition-transform duration-500 ease-in-out hover:scale-110"
-              />
-            </div>
-            {/* Card Content */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent flex flex-col justify-end p-4 text-white">
-              <h3 className="text-lg font-bold">Other Animals</h3>
-              <p className="text-sm mb-4">
-                Parrots, rabbits, and many more animals are also waiting for a
-                loving home.
-              </p>
-              <button className="bg-yellow-500 hover:bg-yellow-400 text-black py-2 px-4 rounded-lg transition-transform transform hover:-translate-y-1">
-                Adopt Me
-              </button>
-            </div>
-          </div>
-        </Link>
+        <Card
+          href="/adopt/cats"
+          imageSrc="https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=400"
+          alt="Cat looking for a home"
+          title="Cats"
+          description="Increased awareness about animal welfare has boosted cat adoptions."
+        />
+        <Card
+          href="/adopt/dogs"
+          imageSrc="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400"
+          alt="Dog waiting for adoption"
+          title="Dogs"
+          description="Only 10% of pets in India are adopted, while the rest face abandonment."
+        />
+        <Card
+          href="/adopt/other"
+          imageSrc="https://images.pexels.com/photos/457447/pexels-photo-457447.jpeg?auto=compress&cs=tinysrgb&w=400"
+          alt="Other animals"
+          title="Other Animals"
+          description="Parrots, rabbits, and many more animals are also waiting for a loving home."
+        />
       </div>
     </>
   );
