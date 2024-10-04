@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const AboutUs = () => {
   return (
-    <div className="bg-gradient-to-r from-pink-600 to-pink-500 py-10 animate-gradientShift bg-[length:200%_200%]">
+    <div className="bg-gradient-to-r from-pink-400 to-pink-400 py-10 animate-gradientShift bg-[length:200%_200%]">
       {/* Hero Section */}
       <section className="text-center py-10">
         <h1 className="text-5xl font-bold text-white mb-4 animate-fadeInDown">
