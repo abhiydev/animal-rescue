@@ -6,17 +6,22 @@ import { FaUser, FaBars, FaTimes } from 'react-icons/fa';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // State for mobile menu
   const [dropdown, setDropdown] = useState(false); // State for user dropdown
+  const [isAdoptDropdownOpen, setIsAdoptDropdownOpen] = useState(false); // State for "Adopt" dropdown
   const isLoggedIn = true; // Mocked user authentication (replace with actual auth logic)
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const toggleDropdown = () => {
+  const toggleUserDropdown = () => {
     setDropdown((prev) => !prev);
   };
 
-  const links = [
+  const toggleAdoptDropdown = () => {
+    setIsAdoptDropdownOpen((prev) => !prev);
+  };
+
+  const adoptLinks = [
     { href: '/adopt/dogs', label: 'Dogs' },
     { href: '/adopt/cats', label: 'Cats' },
     { href: '/adopt/other', label: 'Other Animals' },
@@ -38,9 +43,34 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <ul className="hidden lg:flex space-x-8 items-center">
+          {/* Adopt Dropdown */}
           <li className="relative">
             <button
-              onClick={toggleDropdown}
+              onClick={toggleAdoptDropdown}
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-2 px-6 rounded-lg text-black transition-transform duration-300 hover:scale-105"
+              aria-expanded={isAdoptDropdownOpen}
+            >
+              Adopt
+            </button>
+            {isAdoptDropdownOpen && (
+              <ul className="absolute left-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-20 py-2 space-y-2 animate-fadeInUp">
+                {adoptLinks.map((link) => (
+                  <li key={link.href} className="hover:bg-yellow-300 px-4 py-2">
+                    <Link href={link.href}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          <li className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-2 px-6 rounded-lg text-black transition-transform duration-300 hover:bg-yellow-400 hover:scale-105">
+            <Link href="/donate">Donate</Link>
+          </li>
+
+          {/* User Dropdown */}
+          <li className="relative">
+            <button
+              onClick={toggleUserDropdown}
               className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-2 px-6 rounded-full text-black transition-transform duration-300 hover:scale-105"
               aria-expanded={dropdown}
             >
@@ -49,11 +79,9 @@ const Navbar = () => {
             {dropdown && (
               <ul className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-20 py-2 space-y-2 animate-fadeInUp">
                 {isLoggedIn ? (
-                  <>
-                    <Link href="/user">
-                      <li className="px-4 py-2 hover:bg-yellow-300">Profile</li>
-                    </Link>
-                  </>
+                  <Link href="/user">
+                    <li className="px-4 py-2 hover:bg-yellow-300">Profile</li>
+                  </Link>
                 ) : (
                   <>
                     <Link href="/login">
@@ -70,10 +98,6 @@ const Navbar = () => {
               </ul>
             )}
           </li>
-
-          <li className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-2 px-6 rounded-lg text-black transition-transform duration-300 hover:bg-yellow-400 hover:scale-105">
-            <Link href="/donate">Donate</Link>
-          </li>
         </ul>
       </div>
 
@@ -89,7 +113,26 @@ const Navbar = () => {
 
         <div className="w-full text-center">
           <button
-            onClick={toggleDropdown}
+            onClick={toggleAdoptDropdown}
+            className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-2 px-6 rounded-lg text-black w-full transition-transform duration-300 hover:bg-yellow-400 flex justify-center"
+            aria-expanded={isAdoptDropdownOpen}
+          >
+            Adopt
+          </button>
+          {isAdoptDropdownOpen && (
+            <div className="bg-white rounded-lg shadow-lg z-20 w-full mt-2">
+              {adoptLinks.map((link) => (
+                <div key={link.href} className="hover:bg-yellow-300 py-2 px-4">
+                  <Link href={link.href} onClick={() => setIsOpen(false)}>{link.label}</Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="w-full text-center">
+          <button
+            onClick={toggleUserDropdown}
             className="bg-gradient-to-r from-yellow-400 to-yellow-500 py-2 px-6 rounded-full text-black w-full transition-transform duration-300 hover:bg-yellow-400 flex justify-center"
             aria-expanded={dropdown}
           >
@@ -98,11 +141,9 @@ const Navbar = () => {
           {dropdown && (
             <div className="bg-white rounded-lg shadow-lg z-20 w-full mt-2">
               {isLoggedIn ? (
-                <>
-                  <Link href="/user" onClick={() => setIsOpen(false)}>
-                    <div className="px-4 py-2 hover:bg-yellow-300">Profile</div>
-                  </Link>
-                </>
+                <Link href="/user" onClick={() => setIsOpen(false)}>
+                  <div className="px-4 py-2 hover:bg-yellow-300">Profile</div>
+                </Link>
               ) : (
                 <>
                   <Link href="/login" onClick={() => setIsOpen(false)}>
